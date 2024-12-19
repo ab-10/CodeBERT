@@ -191,10 +191,10 @@ def add_args(parser):
         help="For distributed training: node_index",
     )
     parser.add_argument(
-        "--local_rank",
+        "--local-rank",
         type=int,
         default=-1,
-        help="For distributed training: local_rank",
+        help="For distributed training: local-rank",
     )
     parser.add_argument(
         "--seed", type=int, default=2233, help="random seed for initialization"
