@@ -1,7 +1,5 @@
 # batch size 12 for 16 GB GPU
 
-mnt_dir="/home/codereview"
-
 # You may change the following block for multiple gpu training
 MASTER_HOST=localhost && echo MASTER_HOST: ${MASTER_HOST}
 MASTER_PORT=23333 && echo MASTER_PORT: ${MASTER_PORT}
@@ -11,7 +9,7 @@ WORLD_SIZE=1 && echo WORLD_SIZE: ${WORLD_SIZE}
 NODES=1 && echo NODES: ${NODES}
 NCCL_DEBUG=INFO
 
-bash test_nltk.sh
+bash sh/test_nltk.sh
 
 
 # Change the arguments as required:
@@ -21,12 +19,12 @@ bash test_nltk.sh
 #   out_file: the path of the output file
 #   train_file_name: can be a directory contraining files named with "train*.jsonl"
 
-python -m torch.distributed.launch --nproc_per_node ${PER_NODE_GPU} --node_rank=${RANK} --nnodes=${NODES} --master_addr=${MASTER_HOST} --master_port=${MASTER_PORT} ../run_finetune_cls.py  \
+python -m torch.distributed.launch --nproc_per_node ${PER_NODE_GPU} --node_rank=${RANK} --nnodes=${NODES} --master_addr=${MASTER_HOST} --master_port=${MASTER_PORT} run_finetune_cls.py  \
   --train_epochs 30 \
   --model_name_or_path microsoft/codereviewer \
-  --output_dir ../../save/cls \
-  --train_filename ../../dataset/Diff_Quality_Estimation \
-  --dev_filename ../../dataset/Diff_Quality_Estimation/cls-valid.jsonl \
+  --output_dir save/cls \
+  --train_filename dataset/Diff_Quality_Estimation \
+  --dev_filename dataset/Diff_Quality_Estimation/cls-valid.jsonl \
   --max_source_length 512 \
   --max_target_length 128 \
   --train_batch_size 12 \

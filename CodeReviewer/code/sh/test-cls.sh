@@ -10,10 +10,10 @@ WORLD_SIZE=1 && echo WORLD_SIZE: ${WORLD_SIZE}
 NODES=1 && echo NODES: ${NODES}
 NCCL_DEBUG=INFO
 
-python -m torch.distributed.launch --nproc_per_node ${PER_NODE_GPU} --node_rank=${RANK} --nnodes=${NODES} --master_addr=${MASTER_HOST} --master_port=${MASTER_PORT} ../run_test_cls.py  \
+python -m torch.distributed.launch --nproc_per_node ${PER_NODE_GPU} --node_rank=${RANK} --nnodes=${NODES} --master_addr=${MASTER_HOST} --master_port=${MASTER_PORT} run_test_cls.py  \
   --model_name_or_path microsoft/codereviewer \
-  --output_dir ../../save/gen \
-  --load_model_path ../../save/gen/checkpoint \
+  --output_dir save/gen \
+  --load_model_path save/cls/checkpoints-last-0.689/ \
   --output_dir empty \
   --eval_file cls-test.jsonl \
   --max_source_length 512 \
